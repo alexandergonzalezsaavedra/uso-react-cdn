@@ -1,0 +1,75 @@
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/babel-standalone@6/babel.js"></script>
+    <title>Uso React CDN</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const App = () => {
+            const dataJson = "https://appsweb01.urosario.edu.co/portal-resources/janus-profesores/profesores-janus.json"
+            const [data, setData] = useState([]);
+            const [count, setCount] = useState(0)
+            useEffect(()=> {
+                extraer()
+            },[])
+            const extraer = async() => {
+                try {
+                    let info = await fetch(dataJson)
+                    let resInfo = await info.json()
+                    setData(resInfo)
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            const aumentar = () => {
+                setCount(count + 1)
+            }
+            const disminuir = () => {
+                setCount(count - 1)
+            }
+            return (
+                <section className="py-5">
+                    <div className="container">
+                        <h3>
+                            Prueba consumo info json local
+                        </h3>
+                        <p>
+                            Conteo: {count}
+                        </p>
+                        <div className="row">
+                            <div className="col-sm-3">
+                                <div className="btn-group">
+                                    <div className="btn-group">
+                                        <a className="btn btn-outline-danger"
+                                        onClick={disminuir}
+                                        >
+                                            - Disminuir
+                                        </a>
+                                        <a className="btn btn-outline-primary"
+                                        onClick={aumentar}
+                                        >
+                                            + Aumentar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+        ReactDOM.render(
+            <App />,
+            document.getElementById("root")
+        );
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>
